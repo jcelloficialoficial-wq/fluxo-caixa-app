@@ -1,66 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1e40af">
-    <meta name="description" content="Aplicativo para gerenciar fluxo de caixa, serviços e garantias">
-    <link rel="manifest" href="/manifest.json">
-    <title>Fluxo de Caixa Diário</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxo de Caixa</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand-primary': '#1e40af', 'brand-secondary': '#1d4ed8', 'dark-bg': '#111827', 'dark-card': '#1f2937', 'dark-border': '#374151', 'dark-text': '#d1d5db', 'dark-text-secondary': '#9ca3af', 'accent-green': '#10b981', 'accent-red': '#ef4444',
-                    },
-                },
-            },
-        }
-    </script>
-    <script type="importmap">
-    {"imports": {"react": "https://esm.sh/react@18.2.0","react-dom/client": "https://esm.sh/react-dom@18.2.0/client"}}</script>
+    <style>
+        body { background: #111827; color: white; font-family: sans-serif; }
+        .container { max-width: 400px; margin: 0 auto; padding: 20px; }
+        .card { background: #1f2937; padding: 20px; border-radius: 10px; margin: 10px 0; }
+        .btn { width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; margin: 5px 0; }
+        .green { background: #10b981; }
+        .blue { background: #1e40af; }
+        .red { background: #ef4444; }
+    </style>
 </head>
-<body class="bg-dark-bg text-dark-text min-h-screen">
-    <div id="root"></div>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; font-size: 2rem; margin-bottom: 10px;">💰 Fluxo de Caixa</h1>
+        <p style="text-align: center; color: #9ca3af; margin-bottom: 20px;">App de controle financeiro</p>
+        
+        <div class="card" style="text-align: center;">
+            <p style="font-size: 1.2rem; margin-bottom: 10px;">Saldo Disponível</p>
+            <p style="font-size: 2rem; font-weight: bold; color: #10b981;">R$ 2.845,00</p>
+        </div>
+
+        <button class="btn green" onclick="alert('Entrada registrada! 📥')">📥 Entrada</button>
+        <button class="btn red" onclick="alert('Saída registrada! 📤')">📤 Saída</button>
+        <button class="btn blue" onclick="alert('Nova transação! ➕')">➕ Nova Transação</button>
+        <button class="btn" style="background: #3730a3;" onclick="alert('App funcionando! ✅')">🚀 Testar App</button>
+
+        <p style="text-align: center; color: #6b7280; margin-top: 20px;">PWA - Funciona offline</p>
+    </div>
+
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => console.log('SW registered:', registration))
-                    .catch(error => console.log('SW registration failed:', error));
-            });
+            navigator.serviceWorker.register('/sw.js');
         }
-    </script>
-    <script type="module">
-        import React from 'react';
-        import { createRoot } from 'react-dom/client';
-
-        function App() {
-            const [count, setCount] = React.useState(0);
-            return React.createElement('div', { className: 'p-8 max-w-md mx-auto' },
-                React.createElement('h1', { className: 'text-3xl font-bold text-white mb-2 text-center' }, '💰 Fluxo de Caixa'),
-                React.createElement('p', { className: 'text-dark-text-secondary text-center mb-6' }, 'Seu app de gestão financeira'),
-                React.createElement('div', { className: 'bg-dark-card p-6 rounded-lg mb-4 text-center' },
-                    React.createElement('p', { className: 'text-lg mb-2' }, 'Saldo Atual'),
-                    React.createElement('p', { className: 'text-2xl font-bold text-accent-green' }, 'R$ 1.250,00')
-                ),
-                React.createElement('button', { 
-                    className: 'w-full bg-brand-primary text-white px-6 py-3 rounded-lg font-semibold mb-4',
-                    onClick: () => alert('Funcionalidade em desenvolvimento!')
-                }, '➕ Nova Transação'),
-                React.createElement('button', { 
-                    className: 'w-full bg-brand-secondary text-white px-6 py-3 rounded-lg font-semibold',
-                    onClick: () => {
-                        setCount(count + 1);
-                        alert(App funcionando! Cliques: ${count + 1});
-                    }
-                }, Testar App (${count}))
-            );
-        }
-        const root = createRoot(document.getElementById('root'));
-        root.render(React.createElement(App));
     </script>
 </body>
 </html>
