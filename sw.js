@@ -1,4 +1,4 @@
-// Service Worker simplificado e funcional
+// Service Worker do Fluxo de Caixa
 const CACHE_NAME = 'fluxo-caixa-v1';
 const urlsToCache = [
   './',
@@ -6,7 +6,6 @@ const urlsToCache = [
   './manifest.json'
 ];
 
-// Instalação
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -16,7 +15,6 @@ self.addEventListener('install', function(event) {
   );
 });
 
-// Interceptar requisições
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
