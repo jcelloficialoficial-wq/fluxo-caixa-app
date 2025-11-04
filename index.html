@@ -3,39 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e40af">
+    <meta name="description" content="App para gerenciar fluxo de caixa">
+    <link rel="manifest" href="/manifest.json">
     <title>Fluxo de Caixa</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background: #111827; color: white; font-family: sans-serif; }
-        .container { max-width: 400px; margin: 0 auto; padding: 20px; }
-        .card { background: #1f2937; padding: 20px; border-radius: 10px; margin: 10px 0; }
-        .btn { width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; margin: 5px 0; }
-        .green { background: #10b981; }
-        .blue { background: #1e40af; }
-        .red { background: #ef4444; }
-    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#1e40af',
+                        'dark-bg': '#111827',
+                        'dark-card': '#1f2937',
+                        'green-money': '#10b981',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <div class="container">
-        <h1 style="text-align: center; font-size: 2rem; margin-bottom: 10px;">💰 Fluxo de Caixa</h1>
-        <p style="text-align: center; color: #9ca3af; margin-bottom: 20px;">App de controle financeiro</p>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-md">
+        <h1 class="text-3xl font-bold text-center mb-4">💰 Fluxo de Caixa</h1>
+        <p class="text-gray-400 text-center mb-8">Controle suas finanças facilmente</p>
         
-        <div class="card" style="text-align: center;">
-            <p style="font-size: 1.2rem; margin-bottom: 10px;">Saldo Disponível</p>
-            <p style="font-size: 2rem; font-weight: bold; color: #10b981;">R$ 2.845,00</p>
+        <!-- Card Saldo -->
+        <div class="bg-gray-800 p-6 rounded-lg mb-6 text-center shadow-lg">
+            <p class="text-lg mb-2 text-gray-300">Saldo Disponível</p>
+            <p class="text-3xl font-bold text-green-400">R$ 2.845,00</p>
         </div>
 
-        <button class="btn green" onclick="alert('Entrada registrada! 📥')">📥 Entrada</button>
-        <button class="btn red" onclick="alert('Saída registrada! 📤')">📤 Saída</button>
-        <button class="btn blue" onclick="alert('Nova transação! ➕')">➕ Nova Transação</button>
-        <button class="btn" style="background: #3730a3;" onclick="alert('App funcionando! ✅')">🚀 Testar App</button>
+        <!-- Botões de Ação -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <button class="bg-green-600 hover:bg-green-700 text-white py-4 rounded-lg font-bold transition duration-200" 
+                    onclick="alert('Entrada registrada! 📥')">
+                📥 Entrada
+            </button>
+            <button class="bg-red-600 hover:bg-red-700 text-white py-4 rounded-lg font-bold transition duration-200" 
+                    onclick="alert('Saída registrada! 📤')">
+                📤 Saída
+            </button>
+        </div>
 
-        <p style="text-align: center; color: #6b7280; margin-top: 20px;">PWA - Funciona offline</p>
+        <!-- Botões Principais -->
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold mb-3 transition duration-200" 
+                onclick="alert('Nova transação adicionada! ➕')">
+            ➕ Adicionar Transação
+        </button>
+
+        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 rounded-lg font-bold transition duration-200" 
+                onclick="alert('App funcionando perfeitamente! ✅')">
+            🚀 Testar App
+        </button>
+
+        <!-- Status -->
+        <div class="mt-8 p-4 bg-gray-800 rounded-lg">
+            <p class="text-center text-green-400 font-semibold">✅ PWA Funcionando</p>
+            <p class="text-center text-gray-400 text-sm mt-1">Pronto para gerar APK!</p>
+        </div>
     </div>
 
+    <!-- Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js');
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('Service Worker registrado com sucesso!');
+                    })
+                    .catch(function(error) {
+                        console.log('Falha no Service Worker:', error);
+                    });
+            });
         }
     </script>
 </body>
