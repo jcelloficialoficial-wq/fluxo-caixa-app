@@ -1,17 +1,27 @@
-const CACHE_NAME = 'fluxo-caixa-v2';
+// Service Worker simplificado e funcional
+const CACHE_NAME = 'fluxo-caixa-v1';
 const urlsToCache = [
-  '/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png',
-  'https://cdn.tailwindcss.com', 'https://esm.sh/react@18.2.0', 'https://esm.sh/react-dom@18.2.0/client'
+  './',
+  './index.html',
+  './manifest.json'
 ];
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache)));
+// Instalação
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        return cache.addAll(urlsToCache);
+      })
+  );
 });
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(caches.match(event.request).then((response) => response || fetch(event.request)));
-});
-
-self.addEventListener('activate', (event) => {
-  console.log('Service Worker ativado!');
+// Interceptar requisições
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        return response || fetch(event.request);
+      })
+  );
 });
